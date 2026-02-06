@@ -1,4 +1,171 @@
+// Punctuation characters for each script
+const scriptPunctuation = {
+  latin: " .,;:!?\"'()-[]{}", // space
+  cyrillic: " .,;:!?\"'()-[]{}", // space
+  greek: " ·.,;:!?\"'()-[]{}", // space
+  arabic: " ،؛؟", // space, Arabic NBSP
+  hebrew: " .,;:!?\"'()-[]{}׳״", // space, Hebrew NBSP
+  devanagari: " ।॥", // space, Devanagari NBSP
+  armenian: " ։՞՛՜։,;«»", // space, Armenian NBSP
+  georgian: " .,;:!?\"'()-[]{}", // space
+  thai: " ฯๆ.,;:!?\"'()-[]{}", // space
+  hangul: " .,;:!?\"'()-[]{}", // space
+  katakana: "。、「」・　", // Japanese full-width space
+  hiragana: "。、「」・　", // Japanese full-width space
+  ethiopic: " ።፣፤፥፦፧", // space
+  tamil: " ।॥", // space, Tamil NBSP
+  bengali: " ।॥", // space, Bengali NBSP
+  lao: " ໆ,;:!?\"'()-[]{}", // space
+  myanmar: " ၊။", // space
+  khmer: " ។៕៚", // space
+  tibetan: " །༎༏༐༑༔", // space
+  syriac: " ܀܁܂", // space
+  cjk: " 。、《》「」『』【】（）　", // space, Japanese full-width space
+  hieroglyph: " ", // space only
+  emoji: " ", // space only
+};
+// Global settings for script toggles
+const settings = {
+  scripts: {
+    latin: true, // 0041–007A, 00C0–00FF (A-Z, a-z, Latin-1 Supplement)
+    cyrillic: true, // 0400–04FF
+    greek: true, // 0370–03FF
+    arabic: true, // 0600–06FF
+    hebrew: true, // 0590–05FF
+    devanagari: true, // 0900–097F
+    armenian: true, // 0530–058F
+    georgian: true, // 10A0–10FF
+    thai: true, // 0E00–0E7F
+    hangul: true, // AC00–D7AF
+    katakana: true, // 30A0–30FF
+    hiragana: true, // 3040–309F
+    ethiopic: true, // 1200–137F
+    tamil: true, // 0B80–0BFF
+    bengali: true, // 0980–09FF
+    lao: true, // 0E80–0EFF
+    myanmar: true, // 1000–109F
+    khmer: true, // 1780–17FF
+    tibetan: true, // 0F00–0FFF
+    syriac: true, // 0700–074F
+    cjk: true, // 4E00–9FFF (CJK Unified Ideographs)
+    hieroglyph: true, // 13000–1342F (Egyptian Hieroglyphs)
+    emoji: true, // 1F300–1FAD6, 1F600–1F64F, etc.
+  },
+};
+
+// ======
+
 document.addEventListener("DOMContentLoaded", function () {
+  // --- Settings Sidebar Logic ---
+  const settingsSidebar = document.querySelector(".settings-sidebar");
+  const settingsToggle = document.getElementById("settings-toggle");
+  const settingsForm = document.getElementById("settings-form");
+
+  // Helper: pretty names for scripts
+  const scriptNames = {
+    latin: "Latin",
+    cyrillic: "Cyrillic",
+    greek: "Greek",
+    arabic: "Arabic",
+    hebrew: "Hebrew",
+    devanagari: "Devanagari",
+    armenian: "Armenian",
+    georgian: "Georgian",
+    thai: "Thai",
+    hangul: "Hangul",
+    katakana: "Katakana",
+    hiragana: "Hiragana",
+    ethiopic: "Ethiopic",
+    tamil: "Tamil",
+    bengali: "Bengali",
+    lao: "Lao",
+    myanmar: "Myanmar",
+    khmer: "Khmer",
+    tibetan: "Tibetan",
+    syriac: "Syriac",
+    cjk: "CJK Ideographs",
+    hieroglyph: "Hieroglyphs",
+    emoji: "Emoji",
+  };
+
+  // Render checkboxes for each script
+  function renderSettingsForm() {
+    if (!settingsForm) return;
+    settingsForm.innerHTML = "";
+    Object.keys(settings.scripts).forEach((key) => {
+      const label = document.createElement("label");
+      label.style.display = "block";
+      label.style.marginBottom = "0.5em";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = key;
+      checkbox.checked = !!settings.scripts[key];
+      checkbox.addEventListener("change", (e) => {
+        settings.scripts[key] = checkbox.checked;
+      });
+      label.appendChild(checkbox);
+      label.appendChild(
+        document.createTextNode(" " + (scriptNames[key] || key)),
+      );
+      settingsForm.appendChild(label);
+    });
+  }
+
+  renderSettingsForm();
+
+  // Select All / Deselect All logic
+  const selectAllBtn = document.getElementById("select-all-btn");
+  const deselectAllBtn = document.getElementById("deselect-all-btn");
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener("click", () => {
+      Object.keys(settings.scripts).forEach(
+        (key) => (settings.scripts[key] = true),
+      );
+      if (settingsForm) {
+        const checkboxes = settingsForm.querySelectorAll(
+          'input[type="checkbox"]',
+        );
+        checkboxes.forEach((cb) => {
+          cb.checked = true;
+        });
+      }
+    });
+  }
+  if (deselectAllBtn) {
+    deselectAllBtn.addEventListener("click", () => {
+      Object.keys(settings.scripts).forEach(
+        (key) => (settings.scripts[key] = false),
+      );
+      if (settingsForm) {
+        const checkboxes = settingsForm.querySelectorAll(
+          'input[type="checkbox"]',
+        );
+        checkboxes.forEach((cb) => {
+          cb.checked = false;
+        });
+      }
+    });
+  }
+
+  // Sidebar toggle logic
+  if (settingsToggle && settingsSidebar) {
+    let open = false;
+    settingsToggle.addEventListener("click", () => {
+      open = !open;
+      settingsSidebar.style.left = open ? "0" : "-260px";
+    });
+    // Optional: close sidebar when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        open &&
+        !settingsSidebar.contains(e.target) &&
+        e.target !== settingsToggle
+      ) {
+        open = false;
+        settingsSidebar.style.left = "-260px";
+      }
+    });
+  }
   const chatForm = document.querySelector(".chat-form");
   const chatTextarea = document.querySelector(".chat-textarea");
   const greeterBanner = document.querySelector(".greeter-banner");
@@ -167,17 +334,63 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return true;
     }
+
     function randomChar() {
+      // Map script keys to their Unicode ranges
+      const scriptRanges = {
+        latin: [[0x0021, 0x007e]],
+        cyrillic: [[0x0400, 0x04ff]],
+        greek: [[0x0370, 0x03ff]],
+        hebrew: [[0x0590, 0x05ff]],
+        arabic: [[0x0600, 0x06ff]],
+        devanagari: [[0x0900, 0x097f]],
+        hiragana: [[0x3040, 0x309f]],
+        katakana: [[0x30a0, 0x30ff]],
+        cjk: [[0x4e00, 0x4e7f]], // common subset
+        hangul: [[0xac00, 0xd7af]],
+        emoji: [
+          [0x1f300, 0x1f5ff],
+          [0x1f600, 0x1f64f],
+          [0x1f680, 0x1f6ff],
+          [0x1f900, 0x1f9ff],
+        ],
+        hieroglyph: [[0x13000, 0x1342f]],
+        armenian: [[0x0530, 0x058f]],
+        georgian: [[0x10a0, 0x10ff]],
+        thai: [[0x0e00, 0x0e7f]],
+        ethiopic: [[0x1200, 0x137f]],
+        tamil: [[0x0b80, 0x0bff]],
+        bengali: [[0x0980, 0x09ff]],
+        lao: [[0x0e80, 0x0eff]],
+        myanmar: [[0x1000, 0x109f]],
+        khmer: [[0x1780, 0x17ff]],
+        tibetan: [[0x0f00, 0x0fff]],
+        syriac: [[0x0700, 0x074f]],
+      };
+
+      // Build a list of enabled script ranges
+      let enabledRanges = [];
+      for (const script in settings.scripts) {
+        if (settings.scripts[script] && scriptRanges[script]) {
+          enabledRanges = enabledRanges.concat(scriptRanges[script]);
+        }
+      }
+      // Fallback to Latin if none enabled
+      if (enabledRanges.length === 0) {
+        enabledRanges = scriptRanges.latin;
+      }
+
       let cp;
       let tries = 0;
       do {
-        const [start, end] = ranges[Math.floor(Math.random() * ranges.length)];
+        const [start, end] =
+          enabledRanges[Math.floor(Math.random() * enabledRanges.length)];
         cp = start + Math.floor(Math.random() * (end - start + 1));
         tries++;
       } while (!isRenderable(cp) && tries < 10);
-      // Fallback to Latin if not renderable after 10 tries
+      // Fallback to space if not renderable after 10 tries
       if (!isRenderable(cp)) {
-        cp = 0x0041 + Math.floor(Math.random() * 26); // A-Z
+        cp = " ";
       }
       return String.fromCodePoint(cp);
     }
