@@ -66,7 +66,7 @@ if (tempSlider) {
     // Always set slider value to 1
     tempSlider.value = 1;
     const quips = [
-      "Order is just chaos that hasn't tried hard enough yet.",
+      "Order is just chaos that hasn't found the right monkey.",
       "Entropy cannot be reduced.",
     ];
     alert(quips[Math.floor(Math.random() * quips.length)]);
@@ -361,6 +361,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   const chatForm = document.querySelector(".chat-form");
   const chatTextarea = document.querySelector(".chat-textarea");
+  const chatSubmit = chatForm
+    ? chatForm.querySelector('button[type="submit"], input[type="submit"]')
+    : null;
   const greeterBanner = document.querySelector(".greeter-banner");
   const chatArea = document.querySelector(".container");
 
@@ -466,7 +469,19 @@ document.addEventListener("DOMContentLoaded", function () {
     chatTextarea.value = "";
     chatTextarea.placeholder = "Reply...";
     chatTextarea.focus();
+    // Disable submit button after submit
+    if (chatSubmit) chatSubmit.disabled = true;
   });
+
+  // Enable/disable submit button based on textarea content
+  function updateSubmitState() {
+    if (!chatSubmit) return;
+    chatSubmit.disabled = chatTextarea.value.trim().length === 0;
+  }
+  chatTextarea.addEventListener("input", updateSubmitState);
+  chatTextarea.addEventListener("change", updateSubmitState);
+  // Initial state
+  updateSubmitState();
 
   // Submit on Enter, newline on Shift+Enter
   chatTextarea.addEventListener("keydown", function (e) {

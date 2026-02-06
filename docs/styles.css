@@ -298,6 +298,12 @@ input[type="checkbox"]:checked {
   margin-left: 0;
 }
 
+.submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(30%);
+}
+
 .submit-btn:hover {
   background: var(--accent-brown-hover);
 }
@@ -319,7 +325,7 @@ input[type="checkbox"]:checked {
   overflow-y: auto;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
   border-radius: 0 1em 1em 0;
-  padding: 1.5em 1em 1.5em 0.5em;
+  padding: 1.5em 1em 1.5em 1em;
   z-index: 2000;
   transition: transform 0.3s;
   transform: translateX(-260px);
@@ -361,14 +367,14 @@ input[type="checkbox"]:checked {
 .settings-toggle-btn {
   position: fixed;
   font-size: 18px;
-  top: calc(var(--navbar-height) + 2.5em);
+  top: calc(var(--navbar-height) + 1.5em);
   left: 0;
   z-index: 3001;
   background: var(--background-darkest);
   color: var(--text-light);
   border: none;
   border-radius: 0 0.75em 0.75em 0;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.75em;
   cursor: pointer;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
   transition:
@@ -378,7 +384,7 @@ input[type="checkbox"]:checked {
 }
 
 .settings-sidebar.open ~ .settings-toggle-btn {
-  transform: translateX(240px);
+  transform: translateX(238px);
 }
 
 /* Temperature slider styles */
