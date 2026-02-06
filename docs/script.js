@@ -104,6 +104,15 @@ document.addEventListener("DOMContentLoaded", function () {
     chatTextarea.focus();
   });
 
+  // Submit on Enter, newline on Shift+Enter
+  chatTextarea.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      chatForm.requestSubmit();
+    }
+    // Otherwise, allow default (newline on Shift+Enter)
+  });
+
   function randomString300() {
     // Unicode ranges for various human scripts (printable blocks only, CJK subset for better font support)
     const ranges = [
@@ -169,8 +178,8 @@ document.addEventListener("DOMContentLoaded", function () {
       return String.fromCodePoint(cp);
     }
     let result = "";
-    const minLen = 150;
-    const maxLen = 660;
+    const minLen = 50;
+    const maxLen = 750;
     const length = minLen + Math.floor(Math.random() * (maxLen - minLen + 1));
     for (let i = 0; i < length; i++) {
       result += randomChar();
