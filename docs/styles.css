@@ -158,13 +158,15 @@ html {
 
 .chat-msg {
   max-width: 85%;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   line-height: 1.4;
   border-radius: var(--border-radius);
   font-size: 1.1em;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-line;
+  position: relative;
+  margin-bottom: 1rem;
 }
 
 .chat-msg.user {
@@ -183,18 +185,25 @@ html {
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-line;
+  margin-bottom: 1.5rem;
 }
 
 /* Copy icon styles */
 .copy-icon-wrapper {
-  display: flex;
-  align-items: center;
+  position: absolute;
+  bottom: -26px;
+  left: 13px;
   color: var(--text-muted);
   opacity: 0.85;
   transition: opacity 0.2s;
   cursor: pointer;
   margin-bottom: 0.2em;
 }
+
+.chat-msg.user .copy-icon-wrapper {
+  right: -13px !important;
+}
+
 .copy-icon-wrapper:hover {
   opacity: 1;
   color: var(--text-light);
