@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!chatDisplay) {
     chatDisplay = document.createElement("div");
     chatDisplay.className = "chat-display";
+    chatDisplay.style.display = "none";
     if (chatArea) chatArea.insertBefore(chatDisplay, chatArea.firstChild);
   }
 
@@ -31,14 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (greeterBanner) greeterBanner.style.display = "none";
     // Move chat area to bottom
     if (chatArea) {
-      chatArea.style.position = "fixed";
-      chatArea.style.left = "0";
-      chatArea.style.right = "0";
-      chatArea.style.bottom = "0";
-      chatArea.style.margin = "0 auto";
-      chatArea.style.width = "100%";
-      chatArea.style.maxWidth = "480px";
-      chatArea.style.background = "transparent";
+      chatArea.classList.add("bottom");
     }
     // Add user message to memory
     const userMsg = chatTextarea.value.trim();
@@ -49,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         role: "assistant",
         content: "This is a spoofed assistant reply.",
       });
+      chatDisplay.style.display = "flex";
       renderMessages();
     }
     // Clear textarea and update placeholder
@@ -56,10 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     chatTextarea.placeholder = "Reply...";
   });
 
-  // Initial assistant greeting
-  chatMessages.push({
-    role: "assistant",
-    content: "Hi! How can I help you today?",
-  });
-  renderMessages();
+  // Initial assistant greeting (do not show yet)
+  // chatMessages.push({ role: "assistant", content: "Hi! How can I help you today?" });
+  // renderMessages();
 });
