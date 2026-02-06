@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function randomString300() {
-    // Unicode ranges for various human scripts (printable blocks only)
+    // Unicode ranges for various human scripts (printable blocks only, CJK subset for better font support)
     const ranges = [
       [0x0021, 0x007e], // Basic Latin (printable)
       [0x0400, 0x04ff], // Cyrillic
@@ -115,18 +115,44 @@ document.addEventListener("DOMContentLoaded", function () {
       [0x0900, 0x097f], // Devanagari
       [0x3040, 0x309f], // Hiragana
       [0x30a0, 0x30ff], // Katakana
-      [0x4e00, 0x9fff], // CJK Unified Ideographs
+      [0x4e00, 0x4e7f], // CJK Unified Ideographs (common subset)
       [0xac00, 0xd7af], // Hangul Syllables
+      [0x1f300, 0x1f5ff], // Misc Symbols & Pictographs (emoji)
+      [0x1f600, 0x1f64f], // Emoticons (emoji)
+      [0x1f680, 0x1f6ff], // Transport & Map (emoji)
+      [0x1f900, 0x1f9ff], // Supplemental Symbols & Pictographs (emoji)
+      [0x13000, 0x1342f], // Egyptian Hieroglyphs
     ];
+    // Helper: check if a code point is likely to render (skip surrogates, controls, private use, and filter CJK to common subset)
     function isRenderable(cp) {
-      // Skip surrogates, controls, and private use
-      return (
-        (cp < 0xd800 || cp > 0xdfff) && // not surrogate
-        (cp < 0xe000 || cp > 0xf8ff) && // not private use
-        (cp < 0xf0000 || cp > 0xffffd) && // not private use
-        (cp < 0x100000 || cp > 0x10fffd) && // not private use
-        (cp > 0x1f || cp === 0x20) // not C0 control except space
-      );
+      // Not surrogate, not private use, not control
+      if (
+        (cp >= 0xd800 && cp <= 0xdfff) ||
+        (cp >= 0xe000 && cp <= 0xf8ff) ||
+        (cp >= 0xf0000 && cp <= 0xffffd) ||
+        (cp >= 0x100000 && cp <= 0x10fffd) ||
+        (cp <= 0x1f && cp !== 0x20)
+      ) {
+        return false;
+      }
+      // CJK: only use a small, common subset (0x4E00-0x4E7F)
+      if (cp >= 0x4e00 && cp <= 0x9fff && !(cp >= 0x4e00 && cp <= 0x4e7f)) {
+        return false;
+      }
+      // Devanagari: skip code points that are not assigned (0x093A-0x093B, 0x094E-0x094F, 0x0955-0x0957, 0x0972-0x0977, 0x0979-0x097A, 0x0980+)
+      if (cp >= 0x0900 && cp <= 0x097f) {
+        if (
+          (cp >= 0x093a && cp <= 0x093b) ||
+          (cp >= 0x094e && cp <= 0x094f) ||
+          (cp >= 0x0955 && cp <= 0x0957) ||
+          (cp >= 0x0972 && cp <= 0x0977) ||
+          (cp >= 0x0979 && cp <= 0x097a) ||
+          cp >= 0x0980
+        ) {
+          return false;
+        }
+      }
+      return true;
     }
     function randomChar() {
       let cp;
@@ -136,10 +162,13 @@ document.addEventListener("DOMContentLoaded", function () {
         cp = start + Math.floor(Math.random() * (end - start + 1));
         tries++;
       } while (!isRenderable(cp) && tries < 10);
+      // Fallback to Latin if not renderable after 10 tries
+      if (!isRenderable(cp)) {
+        cp = 0x0041 + Math.floor(Math.random() * 26); // A-Z
+      }
       return String.fromCodePoint(cp);
     }
     let result = "";
-    // Math.random() * (max - min + 1) + min can be slightly biased; use Math.floor(Math.random() * (max - min + 1)) + min for uniformity
     const minLen = 150;
     const maxLen = 660;
     const length = minLen + Math.floor(Math.random() * (maxLen - minLen + 1));
