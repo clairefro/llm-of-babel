@@ -1,13 +1,14 @@
 :root {
+  --background-darkest: #181818;
   --background-dark: #232323;
   --background-chat: #2d2d2d;
   --text-light: #f3f3f3;
   --accent-orange: #ff7f4f;
   --accent-brown: #8a4a32;
   --accent-brown-hover: #a65c3a;
-  --border-radius: 24px;
+  --border-radius: 0.75rem;
   --greeter-title: "Georgia", serif;
-  --container-width: 900px;
+  --container-width: 700px;
   --chat-area-width: 100%;
   --chat-form-max-width: 900px;
 }
@@ -62,7 +63,7 @@ body {
 .greeter-title {
   font-family: var(--greeter-title);
   font-size: 2.2em;
-  color: #f3e6d3;
+  color: var(--text-light);
   letter-spacing: 0.02em;
   margin-top: 12px;
 }
@@ -86,23 +87,47 @@ body {
   bottom: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 480px;
   background: transparent;
   justify-content: flex-end;
   align-items: center;
 }
 
 .chat-display {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   flex: 1;
   min-height: 0;
   height: 100%;
-  width: 100%;
-  padding: 1rem 0;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   margin-bottom: 0;
+  padding: 1rem;
+}
+
+.chat-msg {
+  max-width: 85%;
+  margin: 6px 1rem;
+  padding: 1rem;
+  line-height: 1.4;
+  border-radius: var(--border-radius);
+  font-size: 1.1em;
+  word-break: break-word;
+}
+
+.chat-msg.user {
+  background: var(--background-darkest);
+  color: var(--text-light);
+  align-self: flex-end;
+  text-align: right;
+}
+
+.chat-msg.assistant {
+  background: #222;
+  color: var(--assistant-text);
+  align-self: flex-start;
+  text-align: left;
 }
 
 .chat-area {
@@ -143,7 +168,7 @@ body {
 .submit-btn {
   background: var(--accent-brown);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   width: 48px;
   height: 48px;
   margin-right: 0.5rem;
