@@ -1,58 +1,158 @@
-// Punctuation characters for each script
-const scriptPunctuation = {
-  latin: " .,;:!?\"'()-[]{}", // space
-  cyrillic: " .,;:!?\"'()-[]{}", // space
-  greek: " ·.,;:!?\"'()-[]{}", // space
-  arabic: " ،؛؟", // space, Arabic NBSP
-  hebrew: " .,;:!?\"'()-[]{}׳״", // space, Hebrew NBSP
-  devanagari: " ।॥", // space, Devanagari NBSP
-  armenian: " ։՞՛՜։,;«»", // space, Armenian NBSP
-  georgian: " .,;:!?\"'()-[]{}", // space
-  thai: " ฯๆ.,;:!?\"'()-[]{}", // space
-  hangul: " .,;:!?\"'()-[]{}", // space
-  katakana: "。、「」・　", // Japanese full-width space
-  hiragana: "。、「」・　", // Japanese full-width space
-  ethiopic: " ።፣፤፥፦፧", // space
-  tamil: " ।॥", // space, Tamil NBSP
-  bengali: " ।॥", // space, Bengali NBSP
-  lao: " ໆ,;:!?\"'()-[]{}", // space
-  myanmar: " ၊။", // space
-  khmer: " ។៕៚", // space
-  tibetan: " །༎༏༐༑༔", // space
-  syriac: " ܀܁܂", // space
-  cjk: " 。、《》「」『』【】（）　", // space, Japanese full-width space
-  hieroglyph: " ", // space only
-  emoji: " ", // space only
-};
+// TODO: Punctuation characters for each script
+// const scriptPunctuation = {
+//   latin: " .,;:!?\"'()-[]{}", // space
+//   cyrillic: " .,;:!?\"'()-[]{}", // space
+//   greek: " ·.,;:!?\"'()-[]{}", // space
+//   arabic: " ،؛؟", // space, Arabic NBSP
+//   hebrew: " .,;:!?\"'()-[]{}׳״", // space, Hebrew NBSP
+//   devanagari: " ।॥", // space, Devanagari NBSP
+//   armenian: " ։՞՛՜։,;«»", // space, Armenian NBSP
+//   georgian: " .,;:!?\"'()-[]{}", // space
+//   thai: " ฯๆ.,;:!?\"'()-[]{}", // space
+//   hangul: " .,;:!?\"'()-[]{}", // space
+//   katakana: "。、「」・　", // Japanese full-width space
+//   hiragana: "。、「」・　", // Japanese full-width space
+//   ethiopic: " ።፣፤፥፦፧", // space
+//   tamil: " ।॥", // space, Tamil NBSP
+//   bengali: " ।॥", // space, Bengali NBSP
+//   lao: " ໆ,;:!?\"'()-[]{}", // space
+//   myanmar: " ၊။", // space
+//   khmer: " ។៕៚", // space
+//   tibetan: " །༎༏༐༑༔", // space
+//   syriac: " ܀܁܂", // space
+//   cjk: " 。、《》「」『』【】（）　", // space, Japanese full-width space
+//   hieroglyph: " ", // space only
+//   emoji: " ", // space only
+// };
+
 // Global settings for script toggles
 const settings = {
   scripts: {
     latin: true, // 0041–007A, 00C0–00FF (A-Z, a-z, Latin-1 Supplement)
-    cyrillic: true, // 0400–04FF
-    greek: true, // 0370–03FF
-    arabic: true, // 0600–06FF
-    hebrew: true, // 0590–05FF
-    devanagari: true, // 0900–097F
-    armenian: true, // 0530–058F
-    georgian: true, // 10A0–10FF
-    thai: true, // 0E00–0E7F
-    hangul: true, // AC00–D7AF
-    katakana: true, // 30A0–30FF
-    hiragana: true, // 3040–309F
-    ethiopic: true, // 1200–137F
-    tamil: true, // 0B80–0BFF
-    bengali: true, // 0980–09FF
-    lao: true, // 0E80–0EFF
-    myanmar: true, // 1000–109F
-    khmer: true, // 1780–17FF
-    tibetan: true, // 0F00–0FFF
-    syriac: true, // 0700–074F
-    cjk: true, // 4E00–9FFF (CJK Unified Ideographs)
-    hieroglyph: true, // 13000–1342F (Egyptian Hieroglyphs)
-    emoji: true, // 1F300–1FAD6, 1F600–1F64F, etc.
+    cyrillic: false, // 0400–04FF
+    greek: false, // 0370–03FF
+    arabic: false, // 0600–06FF
+    hebrew: false, // 0590–05FF
+    devanagari: false, // 0900–097F
+    armenian: false, // 0530–058F
+    georgian: false, // 10A0–10FF
+    thai: false, // 0E00–0E7F
+    hangul: false, // AC00–D7AF
+    katakana: false, // 30A0–30FF
+    hiragana: false, // 3040–309F
+    ethiopic: false, // 1200–137F
+    tamil: false, // 0B80–0BFF
+    bengali: false, // 0980–09FF
+    lao: false, // 0E80–0EFF
+    myanmar: false, // 1000–109F
+    khmer: false, // 1780–17FF
+    tibetan: false, // 0F00–0FFF
+    syriac: false, // 0700–074F
+    cjk: false, // 4E00–9FFF (CJK Unified Ideographs)
+    hieroglyph: false, // 13000–1342F (Egyptian Hieroglyphs)
+    emoji: false, // 1F300–1FAD6, 1F600–1F64F, etc.
   },
 };
 
+const SCRIPTS = {
+  latin: {
+    name: "Latin",
+    ranges: [[0x0021, 0x007e]],
+  },
+  cyrillic: {
+    name: "Cyrillic",
+    ranges: [[0x0400, 0x04ff]],
+  },
+  greek: {
+    name: "Greek",
+    ranges: [[0x0370, 0x03ff]],
+  },
+  arabic: {
+    name: "Arabic",
+    ranges: [[0x0600, 0x06ff]],
+  },
+  hebrew: {
+    name: "Hebrew",
+    ranges: [[0x0590, 0x05ff]],
+  },
+  devanagari: {
+    name: "Devanagari",
+    ranges: [[0x0900, 0x097f]],
+  },
+  armenian: {
+    name: "Armenian",
+    ranges: [[0x0530, 0x058f]],
+  },
+  georgian: {
+    name: "Georgian",
+    ranges: [[0x10a0, 0x10ff]],
+  },
+  thai: {
+    name: "Thai",
+    ranges: [[0x0e00, 0x0e7f]],
+  },
+  hangul: {
+    name: "Hangul",
+    ranges: [[0xac00, 0xd7af]],
+  },
+  katakana: {
+    name: "Katakana",
+    ranges: [[0x30a0, 0x30ff]],
+  },
+  hiragana: {
+    name: "Hiragana",
+    ranges: [[0x3040, 0x309f]],
+  },
+  ethiopic: {
+    name: "Ethiopic",
+    ranges: [[0x1200, 0x137f]],
+  },
+  tamil: {
+    name: "Tamil",
+    ranges: [[0x0b80, 0x0bff]],
+  },
+  bengali: {
+    name: "Bengali",
+    ranges: [[0x0980, 0x09ff]],
+  },
+  lao: {
+    name: "Lao",
+    ranges: [[0x0e80, 0x0eff]],
+  },
+  myanmar: {
+    name: "Myanmar",
+    ranges: [[0x1000, 0x109f]],
+  },
+  khmer: {
+    name: "Khmer",
+    ranges: [[0x1780, 0x17ff]],
+  },
+  tibetan: {
+    name: "Tibetan",
+    ranges: [[0x0f00, 0x0fff]],
+  },
+  syriac: {
+    name: "Syriac",
+    ranges: [[0x0700, 0x074f]],
+  },
+  cjk: {
+    name: "CJK Ideographs",
+    ranges: [[0x4e00, 0x4e7f]], // common subset
+  },
+  hieroglyph: {
+    name: "Hieroglyphs",
+    ranges: [[0x13000, 0x1342f]],
+  },
+  emoji: {
+    name: "Emoji",
+    ranges: [
+      [0x1f300, 0x1f5ff],
+      [0x1f600, 0x1f64f],
+      [0x1f680, 0x1f6ff],
+      [0x1f900, 0x1f9ff],
+    ],
+  },
+};
 // ======
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -61,38 +161,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const settingsToggle = document.getElementById("settings-toggle");
   const settingsForm = document.getElementById("settings-form");
 
-  // Helper: pretty names for scripts
-  const scriptNames = {
-    latin: "Latin",
-    cyrillic: "Cyrillic",
-    greek: "Greek",
-    arabic: "Arabic",
-    hebrew: "Hebrew",
-    devanagari: "Devanagari",
-    armenian: "Armenian",
-    georgian: "Georgian",
-    thai: "Thai",
-    hangul: "Hangul",
-    katakana: "Katakana",
-    hiragana: "Hiragana",
-    ethiopic: "Ethiopic",
-    tamil: "Tamil",
-    bengali: "Bengali",
-    lao: "Lao",
-    myanmar: "Myanmar",
-    khmer: "Khmer",
-    tibetan: "Tibetan",
-    syriac: "Syriac",
-    cjk: "CJK Ideographs",
-    hieroglyph: "Hieroglyphs",
-    emoji: "Emoji",
-  };
-
   // Render checkboxes for each script
   function renderSettingsForm() {
     if (!settingsForm) return;
     settingsForm.innerHTML = "";
     Object.keys(settings.scripts).forEach((key) => {
+      if (!SCRIPTS[key]) return;
       const label = document.createElement("label");
       label.style.display = "block";
       label.style.marginBottom = "0.5em";
@@ -105,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       label.appendChild(checkbox);
       label.appendChild(
-        document.createTextNode(" " + (scriptNames[key] || key)),
+        document.createTextNode(" " + (SCRIPTS[key].name || key)),
       );
       settingsForm.appendChild(label);
     });
@@ -285,24 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function randomString300() {
-    // Unicode ranges for various human scripts (printable blocks only, CJK subset for better font support)
-    const ranges = [
-      [0x0021, 0x007e], // Basic Latin (printable)
-      [0x0400, 0x04ff], // Cyrillic
-      [0x0370, 0x03ff], // Greek
-      [0x0590, 0x05ff], // Hebrew
-      [0x0600, 0x06ff], // Arabic
-      [0x0900, 0x097f], // Devanagari
-      [0x3040, 0x309f], // Hiragana
-      [0x30a0, 0x30ff], // Katakana
-      [0x4e00, 0x4e7f], // CJK Unified Ideographs (common subset)
-      [0xac00, 0xd7af], // Hangul Syllables
-      [0x1f300, 0x1f5ff], // Misc Symbols & Pictographs (emoji)
-      [0x1f600, 0x1f64f], // Emoticons (emoji)
-      [0x1f680, 0x1f6ff], // Transport & Map (emoji)
-      [0x1f900, 0x1f9ff], // Supplemental Symbols & Pictographs (emoji)
-      [0x13000, 0x1342f], // Egyptian Hieroglyphs
-    ];
+    // Use SCRIPTS for script ranges
     // Helper: check if a code point is likely to render (skip surrogates, controls, private use, and filter CJK to common subset)
     function isRenderable(cp) {
       // Not surrogate, not private use, not control
@@ -336,48 +393,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function randomChar() {
-      // Map script keys to their Unicode ranges
-      const scriptRanges = {
-        latin: [[0x0021, 0x007e]],
-        cyrillic: [[0x0400, 0x04ff]],
-        greek: [[0x0370, 0x03ff]],
-        hebrew: [[0x0590, 0x05ff]],
-        arabic: [[0x0600, 0x06ff]],
-        devanagari: [[0x0900, 0x097f]],
-        hiragana: [[0x3040, 0x309f]],
-        katakana: [[0x30a0, 0x30ff]],
-        cjk: [[0x4e00, 0x4e7f]], // common subset
-        hangul: [[0xac00, 0xd7af]],
-        emoji: [
-          [0x1f300, 0x1f5ff],
-          [0x1f600, 0x1f64f],
-          [0x1f680, 0x1f6ff],
-          [0x1f900, 0x1f9ff],
-        ],
-        hieroglyph: [[0x13000, 0x1342f]],
-        armenian: [[0x0530, 0x058f]],
-        georgian: [[0x10a0, 0x10ff]],
-        thai: [[0x0e00, 0x0e7f]],
-        ethiopic: [[0x1200, 0x137f]],
-        tamil: [[0x0b80, 0x0bff]],
-        bengali: [[0x0980, 0x09ff]],
-        lao: [[0x0e80, 0x0eff]],
-        myanmar: [[0x1000, 0x109f]],
-        khmer: [[0x1780, 0x17ff]],
-        tibetan: [[0x0f00, 0x0fff]],
-        syriac: [[0x0700, 0x074f]],
-      };
-
-      // Build a list of enabled script ranges
+      // Build a list of enabled script ranges from SCRIPTS
       let enabledRanges = [];
       for (const script in settings.scripts) {
-        if (settings.scripts[script] && scriptRanges[script]) {
-          enabledRanges = enabledRanges.concat(scriptRanges[script]);
+        if (settings.scripts[script] && SCRIPTS[script]) {
+          enabledRanges = enabledRanges.concat(SCRIPTS[script].ranges);
         }
       }
       // Fallback to Latin if none enabled
       if (enabledRanges.length === 0) {
-        enabledRanges = scriptRanges.latin;
+        enabledRanges = SCRIPTS.latin.ranges;
       }
 
       let cp;
