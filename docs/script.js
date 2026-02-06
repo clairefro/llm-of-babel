@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
       msgDiv.textContent = msg.content;
       chatDisplay.appendChild(msgDiv);
     });
+    // Scroll to bottom after rendering
+    chatDisplay.scrollTop = chatDisplay.scrollHeight;
   }
 
   chatForm.addEventListener("submit", function (e) {
