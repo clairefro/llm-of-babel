@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: ".",
+  root: "docs",
   server: {
     open: "/index.html",
     watch: {
