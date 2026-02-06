@@ -1,3 +1,10 @@
+/* Utility: force container to grow to dynamic content height */
+.container-stretch {
+  height: auto !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 :root {
   --background-darkest: #181818;
   --background-dark: #232323;
@@ -178,7 +185,7 @@ input[type="checkbox"]:checked {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 124px;
+  bottom: 118px;
   height: 18px;
   pointer-events: none;
   display: block;
@@ -531,7 +538,7 @@ input[type="checkbox"]:checked {
   width: 100%;
   text-align: center;
   margin: 0.5em 0;
-  font-size: 0.95em;
+  font-size: 0.8em;
   opacity: 0.7;
 }
 .footer a {
@@ -564,5 +571,12 @@ input[type="checkbox"]:checked {
   }
   .pricing-section {
     margin-top: 400px;
+  }
+
+  .pricing-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
