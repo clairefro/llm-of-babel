@@ -346,13 +346,22 @@ input[type="checkbox"]:checked {
   margin-bottom: 1em;
 }
 
+#settings-form label {
+  color: var(--text-muted);
+}
+
+#settings-form input[type="checkbox"]:checked + label,
+#settings-form label:has(> input[type="checkbox"]:checked) {
+  color: var(--text-light);
+}
+
 .sidebar-btn {
   margin-right: 0.5em;
   background: var(--accent-brown);
   color: var(--text-light);
   border: none;
-  border-radius: var(--border-radius);
-  padding: 0.2em 0.7em;
+  border-radius: 3px;
+  padding: 0.3em 0.7em;
   font-size: 0.85em;
   cursor: pointer;
   transition:

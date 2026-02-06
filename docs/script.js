@@ -68,6 +68,7 @@ if (tempSlider) {
     const quips = [
       "Order is just chaos that hasn't found the right monkey.",
       "Entropy cannot be reduced.",
+      "The Second Law is not a suggestion.",
     ];
     alert(quips[Math.floor(Math.random() * quips.length)]);
   };
