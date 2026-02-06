@@ -1,16 +1,4 @@
-/* Checkbox theme color */
-input[type="checkbox"] {
-  accent-color: var(--accent-orange);
-}
-
-/* Fallback for browsers that do not support accent-color */
-input[type="checkbox"]:checked {
-  /* For older browsers, fallback to box-shadow or background */
-  /* This will not override accent-color in modern browsers */
-  box-shadow: 0 0 0 2px var(--accent-orange);
-}
 :root {
-  /* ...existing code... */
   --background-darkest: #181818;
   --background-dark: #232323;
   --background-chat: #2d2d2d;
@@ -48,6 +36,18 @@ body {
   padding-top: var(--navbar-height);
   overflow: hidden;
   box-sizing: border-box;
+}
+
+/* Checkbox theme color */
+input[type="checkbox"] {
+  accent-color: var(--accent-orange);
+}
+
+/* Fallback for browsers that do not support accent-color */
+input[type="checkbox"]:checked {
+  /* For older browsers, fallback to box-shadow or background */
+  /* This will not override accent-color in modern browsers */
+  box-shadow: 0 0 0 2px var(--accent-orange);
 }
 
 .nav-divider {
@@ -140,7 +140,20 @@ html {
   position: relative;
 }
 
-.container.bottom {
+.container-moving {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  min-height: 0;
+  height: calc(100vh - 64px);
+  position: relative;
+}
+
+.container-moving.bottom {
   position: fixed;
   left: 0;
   right: 0;
@@ -400,6 +413,152 @@ html {
 #temperature-slider {
   flex: 1;
   accent-color: var(--accent-orange);
+}
+
+.pricing-btn-link {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--accent-orange);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.6em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pricing-btn-link:hover {
+  background: var(--accent-brown-hover);
+  color: var(--text-light);
+}
+/* Pricing page styles */
+.pricing-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pricing-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2em;
+  gap: 1em;
+}
+.pricing-toggle-label {
+  color: var(--text-muted);
+  font-size: 1em;
+}
+.pricing-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+.pricing-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.pricing-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background-darkest);
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+.pricing-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 3px;
+  background: var(--accent-orange);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.pricing-switch input:checked + .pricing-slider:before {
+  transform: translateX(24px);
+}
+.pricing-card {
+  background: var(--background-darkest);
+  color: var(--text-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  padding: 2em 1.5em 2em 1.5em;
+  min-width: 260px;
+  max-width: 340px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pricing-title {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.pricing-price {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: var(--accent-orange);
+}
+.pricing-period {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  margin-left: 0.2em;
+}
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2em 0;
+  width: 100%;
+}
+.pricing-features li {
+  font-size: 1em;
+  margin-bottom: 0.7em;
+  display: flex;
+  align-items: center;
+}
+.pricing-feature-star {
+  color: var(--accent-orange);
+  margin-right: 0.5em;
+  font-size: 1.1em;
+}
+.pricing-btn {
+  background: var(--accent-brown);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.6em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pricing-btn:disabled {
+  background: var(--background-dark);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.pricing-btn:hover:not(:disabled) {
+  background: var(--accent-brown-hover);
 }
 
 @media (max-width: 600px) {

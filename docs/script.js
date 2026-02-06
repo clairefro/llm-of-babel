@@ -362,7 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const chatForm = document.querySelector(".chat-form");
   const chatTextarea = document.querySelector(".chat-textarea");
   const greeterBanner = document.querySelector(".greeter-banner");
-  const chatArea = document.querySelector(".container");
+  const chatArea = document.querySelector(".container-moving");
 
   // In-memory chat messages
   const chatMessages = [];
