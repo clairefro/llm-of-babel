@@ -165,7 +165,7 @@ html {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 91px;
+  bottom: 108px;
   height: 18px;
   pointer-events: none;
   display: block;
@@ -247,6 +247,7 @@ html {
 
 .chat-form {
   display: flex;
+  height: 76px;
   align-items: center;
   width: 100%;
   max-width: var(--chat-form-max-width);

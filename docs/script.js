@@ -40,13 +40,17 @@ document.addEventListener("DOMContentLoaded", function () {
             i += chunkSize;
             setTimeout(streamChar, 30);
           } else {
-            addCopyIcon(msgDiv, msg.content);
+            if (msg.role === "assistant") {
+              addCopyIcon(msgDiv, msg.content);
+            }
           }
         }, 400);
       } else {
         msgDiv.textContent = msg.content;
         chatDisplay.appendChild(msgDiv);
-        addCopyIcon(msgDiv, msg.content);
+        if (msg.role === "assistant") {
+          addCopyIcon(msgDiv, msg.content);
+        }
       }
     });
     // Scroll to bottom after rendering
