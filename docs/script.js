@@ -61,6 +61,19 @@ const tempSlider = document.getElementById("temperature-slider");
 if (tempSlider) {
   tempSlider.value = 1;
   tempSlider.disabled = true;
+  // Fire event on any user attempt to interact with the slider
+  const fireSliderAttempt = (e) => {
+    // Always set slider value to 1
+    tempSlider.value = 1;
+    const quips = [
+      "Order is just chaos that hasn't tried hard enough yet.",
+      "Entropy cannot be reduced.",
+    ];
+    alert(quips[Math.floor(Math.random() * quips.length)]);
+  };
+  tempSlider.addEventListener("pointerdown", fireSliderAttempt);
+  tempSlider.addEventListener("keydown", fireSliderAttempt);
+  tempSlider.addEventListener("change", fireSliderAttempt);
 }
 
 const SCRIPTS = {

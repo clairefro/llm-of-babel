@@ -340,10 +340,25 @@ html {
 
 .sidebar-btn {
   margin-right: 0.5em;
+  background: var(--accent-brown);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.2em 0.7em;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.sidebar-btn:hover {
+  background: var(--accent-brown-hover);
+  color: var(--text-light);
 }
 
 .settings-toggle-btn {
   position: fixed;
+  font-size: 18px;
   top: calc(var(--navbar-height) + 2.5em);
   left: 0;
   z-index: 3001;
