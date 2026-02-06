@@ -3,6 +3,7 @@
   --background-dark: #232323;
   --background-chat: #2d2d2d;
   --text-light: #f3f3f3;
+  --text-muted: #b0b0b0;
   --accent-orange: #ff7f4f;
   --accent-brown: #8a4a32;
   --accent-brown-hover: #a65c3a;
@@ -108,14 +109,23 @@ body {
   box-sizing: border-box;
 }
 
+/* Message and icon wrapper */
+.chat-msg-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+  margin: 6px 1rem;
+}
+
 .chat-msg {
   max-width: 85%;
-  margin: 6px 1rem;
   padding: 1rem;
   line-height: 1.4;
   border-radius: var(--border-radius);
   font-size: 1.1em;
   word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-line;
 }
 
 .chat-msg.user {
@@ -131,6 +141,24 @@ body {
   color: var(--assistant-text);
   align-self: flex-start;
   text-align: left;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+/* Copy icon styles */
+.copy-icon-wrapper {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  margin-bottom: 0.2em;
+}
+.copy-icon-wrapper:hover {
+  opacity: 1;
+  color: var(--text-light);
 }
 
 .chat-area {
