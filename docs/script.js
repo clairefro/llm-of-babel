@@ -105,12 +105,46 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function randomString300() {
-    const chars =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+    // Unicode ranges for various human scripts (printable blocks only)
+    const ranges = [
+      [0x0021, 0x007e], // Basic Latin (printable)
+      [0x0400, 0x04ff], // Cyrillic
+      [0x0370, 0x03ff], // Greek
+      [0x0590, 0x05ff], // Hebrew
+      [0x0600, 0x06ff], // Arabic
+      [0x0900, 0x097f], // Devanagari
+      [0x3040, 0x309f], // Hiragana
+      [0x30a0, 0x30ff], // Katakana
+      [0x4e00, 0x9fff], // CJK Unified Ideographs
+      [0xac00, 0xd7af], // Hangul Syllables
+    ];
+    function isRenderable(cp) {
+      // Skip surrogates, controls, and private use
+      return (
+        (cp < 0xd800 || cp > 0xdfff) && // not surrogate
+        (cp < 0xe000 || cp > 0xf8ff) && // not private use
+        (cp < 0xf0000 || cp > 0xffffd) && // not private use
+        (cp < 0x100000 || cp > 0x10fffd) && // not private use
+        (cp > 0x1f || cp === 0x20) // not C0 control except space
+      );
+    }
+    function randomChar() {
+      let cp;
+      let tries = 0;
+      do {
+        const [start, end] = ranges[Math.floor(Math.random() * ranges.length)];
+        cp = start + Math.floor(Math.random() * (end - start + 1));
+        tries++;
+      } while (!isRenderable(cp) && tries < 10);
+      return String.fromCodePoint(cp);
+    }
     let result = "";
-    const length = Math.floor(Math.random() * (660 - 150 + 1)) + 150;
+    // Math.random() * (max - min + 1) + min can be slightly biased; use Math.floor(Math.random() * (max - min + 1)) + min for uniformity
+    const minLen = 150;
+    const maxLen = 660;
+    const length = minLen + Math.floor(Math.random() * (maxLen - minLen + 1));
     for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      result += randomChar();
     }
     return result;
   }
