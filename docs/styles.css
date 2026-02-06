@@ -21,6 +21,11 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
 body {
   background: var(--background-dark);
   color: var(--text-light);
@@ -34,8 +39,11 @@ body {
   justify-content: center;
   font-family: var(--font-family);
   padding-top: var(--navbar-height);
-  overflow: hidden;
   box-sizing: border-box;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 /* Checkbox theme color */
@@ -59,12 +67,6 @@ input[type="checkbox"]:checked {
     rgba(35, 35, 35, 0.12) 0%,
     rgba(35, 35, 35, 0) 100%
   );
-}
-
-html {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
 }
 
 .top-nav {
@@ -128,19 +130,6 @@ html {
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  min-height: 0;
-  height: calc(100vh - 64px);
-  position: relative;
-}
-
-.container-moving {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -415,6 +404,22 @@ html {
   accent-color: var(--accent-orange);
 }
 
+/* Pricing page styles */
+.pricing-section {
+  text-align: center;
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4rem;
+}
+
+.pricing-tiers {
+  display: flex;
+  gap: 2rem;
+}
+
 .pricing-btn-link {
   display: inline-block;
   text-decoration: none;
@@ -432,62 +437,7 @@ html {
   background: var(--accent-brown-hover);
   color: var(--text-light);
 }
-/* Pricing page styles */
-.pricing-section {
-  width: 100%;
-  max-width: 900px;
-  margin: 2em auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.pricing-toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2em;
-  gap: 1em;
-}
-.pricing-toggle-label {
-  color: var(--text-muted);
-  font-size: 1em;
-}
-.pricing-switch {
-  position: relative;
-  display: inline-block;
-  width: 48px;
-  height: 24px;
-}
-.pricing-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.pricing-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--background-darkest);
-  border-radius: 24px;
-  transition: background 0.2s;
-}
-.pricing-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  top: 3px;
-  background: var(--accent-orange);
-  border-radius: 50%;
-  transition: transform 0.2s;
-}
-.pricing-switch input:checked + .pricing-slider:before {
-  transform: translateX(24px);
-}
+
 .pricing-card {
   background: var(--background-darkest);
   color: var(--text-light);
@@ -575,5 +525,12 @@ html {
 
   .chat-msg {
     max-width: 100%;
+  }
+
+  .pricing-tiers {
+    flex-direction: column;
+  }
+  .pricing-section {
+    margin-top: 400px;
   }
 }
