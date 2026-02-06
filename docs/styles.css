@@ -7,7 +7,9 @@
   --accent-brown-hover: #a65c3a;
   --border-radius: 24px;
   --greeter-title: "Georgia", serif;
-  --container-width: 700px;
+  --container-width: 900px;
+  --chat-area-width: 100%;
+  --chat-form-max-width: 900px;
 }
 
 body {
@@ -107,7 +109,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50vw;
+  min-width: 0;
+  max-width: var(--container-width);
   margin-bottom: 32px;
 }
 
@@ -115,6 +119,7 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
+  max-width: var(--chat-form-max-width);
   background: var(--background-chat);
   border-radius: var(--border-radius);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
