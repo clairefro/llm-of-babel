@@ -7,7 +7,7 @@
   --accent-brown: #8a4a32;
   --accent-brown-hover: #a65c3a;
   --border-radius: 0.75rem;
-  --greeter-title: "Georgia", serif;
+  --font-family: "Georgia", serif;
   --container-width: 700px;
   --chat-area-width: 100%;
   --chat-form-max-width: 900px;
@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-family);
   padding-top: 64px;
 }
 
@@ -61,7 +61,7 @@ body {
 }
 
 .greeter-title {
-  font-family: var(--greeter-title);
+  font-family: var(--font-family);
   font-size: 2.2em;
   color: var(--text-light);
   letter-spacing: 0.02em;
@@ -120,6 +120,7 @@ body {
 
 .chat-msg.user {
   background: var(--background-darkest);
+  font-family: sans-serif;
   color: var(--text-light);
   align-self: flex-end;
   text-align: right;
