@@ -154,6 +154,7 @@ html {
   overflow-y: scroll;
   margin-bottom: 0;
   padding: 1rem 2rem;
+  padding-bottom: 3rem;
   box-sizing: border-box;
   position: relative;
 }
@@ -164,7 +165,7 @@ html {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 92px;
+  bottom: 91px;
   height: 18px;
   pointer-events: none;
   display: block;
@@ -178,26 +179,10 @@ html {
 }
 
 /* Message and icon wrapper */
-.chat-msg-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5em;
-  margin: 6px 1rem;
-  position: static;
-}
-
-.chat-msg-row .chat-msg {
-  order: 1;
-}
-.chat-msg-row .copy-icon-wrapper {
-  order: 2;
-  margin-left: 0.5em;
-  margin-bottom: 0.1em;
-}
 
 .chat-msg {
   position: static;
-  max-width: 85%;
+  max-width: 90%;
   padding: 0.5rem 1rem;
   line-height: 1.4;
   border-radius: var(--border-radius);
@@ -254,6 +239,7 @@ html {
   align-items: center;
   justify-content: center;
   width: 50vw;
+
   min-width: 0;
   max-width: var(--container-width);
   margin-bottom: 32px;
@@ -305,4 +291,21 @@ html {
 
 .submit-btn svg {
   display: block;
+}
+
+@media (max-width: 600px) {
+  .chat-area {
+    width: 80vw;
+  }
+  .chat-msg.user {
+    margin-bottom: 2rem;
+  }
+
+  .chat-msg.user .copy-icon-wrapper {
+    right: -42px !important;
+  }
+
+  .chat-msg {
+    max-width: 100%;
+  }
 }
