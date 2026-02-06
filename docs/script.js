@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Spoof assistant reply
       chatMessages.push({
         role: "assistant",
-        content: "This is a spoofed assistant reply.",
+        content: randomString300(),
       });
       chatDisplay.style.display = "flex";
       renderMessages();
@@ -49,9 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clear textarea and update placeholder
     chatTextarea.value = "";
     chatTextarea.placeholder = "Reply...";
+    chatTextarea.focus();
   });
 
-  // Initial assistant greeting (do not show yet)
-  // chatMessages.push({ role: "assistant", content: "Hi! How can I help you today?" });
-  // renderMessages();
+  function randomString300() {
+    const chars =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+    let result = "";
+    for (let i = 0; i < 300; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
 });
