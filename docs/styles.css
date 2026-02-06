@@ -238,8 +238,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50vw;
-
+  width: 60vw;
   min-width: 0;
   max-width: var(--container-width);
   margin-bottom: 32px;
@@ -292,6 +291,55 @@ html {
 
 .submit-btn svg {
   display: block;
+}
+
+/* Sidebar styles moved from inline */
+.settings-sidebar {
+  position: absolute;
+  left: -260px;
+  top: 0;
+  width: 240px;
+  background: var(--background-darkest);
+  color: var(--text-light);
+  height: 100%;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+  border-radius: 0 1em 1em 0;
+  padding: 1.5em 1em 1.5em 0.5em;
+  z-index: 100;
+  transition: left 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings-sidebar.open {
+  left: 0;
+}
+.sidebar-title {
+  margin-top: 0;
+}
+
+.sidebar-btn-row {
+  margin-bottom: 1em;
+}
+
+.sidebar-btn {
+  margin-right: 0.5em;
+}
+
+.settings-toggle-btn {
+  position: absolute;
+  right: -40px;
+  top: 1em;
+  z-index: 101;
+  background: var(--background-darkest);
+  color: var(--text-light);
+  border: none;
+  border-radius: 0 0.75em 0.75em 0;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  transition: right 0.3s;
 }
 
 @media (max-width: 600px) {

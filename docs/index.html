@@ -13,51 +13,21 @@
     </div>
 
     <div class="container">
-      <aside
-        class="settings-sidebar"
-        style="
-          position: absolute;
-          left: -260px;
-          top: 0;
-          width: 240px;
-          background: var(--background-darkest);
-          color: var(--text-light);
-          height: 100%;
-          box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
-          border-radius: 0 1em 1em 0;
-          padding: 1.5em 1em;
-          z-index: 100;
-          transition: left 0.3s;
-        "
-      >
-        <h3 style="margin-top: 0">Script Settings</h3>
-        <div style="margin-bottom: 1em">
-          <button type="button" id="select-all-btn" style="margin-right: 0.5em">
+      <aside class="settings-sidebar">
+        <button id="settings-toggle" class="settings-toggle-btn">☰</button>
+        <h3 class="sidebar-title">Script Settings</h3>
+        <div class="sidebar-btn-row">
+          <button type="button" id="select-all-btn" class="sidebar-btn">
             Select All
           </button>
-          <button type="button" id="deselect-all-btn">Deselect All</button>
+          <button type="button" id="deselect-all-btn" class="sidebar-btn">
+            Deselect All
+          </button>
         </div>
         <form id="settings-form">
           <!-- JS will populate checkboxes here -->
         </form>
       </aside>
-      <button
-        id="settings-toggle"
-        style="
-          position: absolute;
-          left: 0;
-          top: 1em;
-          z-index: 101;
-          background: var(--background-darkest);
-          color: var(--text-light);
-          border: none;
-          border-radius: 0 0.75em 0.75em 0;
-          padding: 0.5em 1em;
-          cursor: pointer;
-        "
-      >
-        ☰
-      </button>
       <main>
         <div class="greeter-banner">
           <div class="greeter-title">?</div>

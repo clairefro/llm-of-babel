@@ -318,19 +318,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sidebar toggle logic
   if (settingsToggle && settingsSidebar) {
     let open = false;
-    settingsToggle.addEventListener("click", () => {
+    settingsToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
       open = !open;
-      settingsSidebar.style.left = open ? "0" : "-260px";
+      if (open) {
+        settingsSidebar.classList.add("open");
+      } else {
+        settingsSidebar.classList.remove("open");
+      }
     });
     // Optional: close sidebar when clicking outside
     document.addEventListener("click", (e) => {
-      if (
-        open &&
-        !settingsSidebar.contains(e.target) &&
-        e.target !== settingsToggle
-      ) {
+      if (open && !settingsSidebar.contains(e.target)) {
         open = false;
-        settingsSidebar.style.left = "-260px";
+        settingsSidebar.classList.remove("open");
       }
     });
   }
