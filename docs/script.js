@@ -29,6 +29,7 @@
 const settings = {
   scripts: {
     latin: true, // 0041–007A, 00C0–00FF (A-Z, a-z, Latin-1 Supplement)
+    binary: false, // 0, 1
     cyrillic: false, // 0400–04FF
     greek: false, // 0370–03FF
     arabic: false, // 0600–06FF
@@ -42,6 +43,7 @@ const settings = {
     hiragana: false, // 3040–309F
     ethiopic: false, // 1200–137F
     tamil: false, // 0B80–0BFF
+    kannada: false, // 0C80–0CFF
     bengali: false, // 0980–09FF
     lao: false, // 0E80–0EFF
     myanmar: false, // 1000–109F
@@ -57,15 +59,33 @@ const settings = {
 const SCRIPTS = {
   latin: {
     name: "Latin",
-    ranges: [[0x0021, 0x007e]],
+    // Only A-Z (0x41-0x5A), a-z (0x61-0x7A), space (0x20), period (0x2E), comma (0x2C), exclamation mark (0x21), question mark (0x3F)
+    ranges: [
+      [0x0041, 0x005a], // A-Z
+      [0x0061, 0x007a], // a-z
+      [0x0020, 0x0020], // space
+      //   [0x002e, 0x002e], // period
+      //   [0x002c, 0x002c], // comma
+      //   [0x0021, 0x0021], // exclamation mark
+      //   [0x003f, 0x003f], // question mark
+    ],
   },
   cyrillic: {
     name: "Cyrillic",
-    ranges: [[0x0400, 0x04ff]],
+    // U+0410–U+044F (А–я), U+0401 (Ё), U+0451 (ё)
+    ranges: [
+      [0x0410, 0x044f], // А-я
+      [0x0401, 0x0401], // Ё
+      [0x0451, 0x0451], // ё
+    ],
   },
   greek: {
     name: "Greek",
-    ranges: [[0x0370, 0x03ff]],
+    // Restrict to most common Greek uppercase (U+0391–U+03A9) and lowercase (U+03B1–U+03C9) letters
+    ranges: [
+      [0x0391, 0x03a9], // Α–Ω
+      [0x03b1, 0x03c9], // α–ω
+    ],
   },
   arabic: {
     name: "Arabic",
@@ -73,7 +93,10 @@ const SCRIPTS = {
   },
   hebrew: {
     name: "Hebrew",
-    ranges: [[0x0590, 0x05ff]],
+    // Restrict to most common Hebrew letters: א (U+05D0) to ת (U+05EA)
+    ranges: [
+      [0x05d0, 0x05ea], // letters א–ת
+    ],
   },
   devanagari: {
     name: "Devanagari",
@@ -81,15 +104,25 @@ const SCRIPTS = {
   },
   armenian: {
     name: "Armenian",
-    ranges: [[0x0530, 0x058f]],
+    // Restrict to most common Armenian letters: U+0531–U+0556 (uppercase), U+0561–U+0587 (lowercase)
+    ranges: [
+      [0x0531, 0x0556], // uppercase letters
+      [0x0561, 0x0587], // lowercase letters
+    ],
   },
   georgian: {
     name: "Georgian",
-    ranges: [[0x10a0, 0x10ff]],
+    ranges: [
+      [0x10d0, 0x10f0], // Mkhedruli (modern Georgian alphabet)
+    ],
   },
   thai: {
     name: "Thai",
-    ranges: [[0x0e00, 0x0e7f]],
+    // Restrict to most common Thai consonants (U+0E01–U+0E2E) and digits (U+0E50–U+0E59)
+    ranges: [
+      [0x0e01, 0x0e2e], // consonants
+      [0x0e50, 0x0e59], // digits
+    ],
   },
   hangul: {
     name: "Hangul",
@@ -101,35 +134,89 @@ const SCRIPTS = {
   },
   hiragana: {
     name: "Hiragana",
-    ranges: [[0x3040, 0x309f]],
+    // Restrict to most common Hiragana: あ (U+3042) to ん (U+3093), and を (U+3092)
+    ranges: [
+      [0x3042, 0x3093], // あ–ん
+      [0x3092, 0x3092], // を
+    ],
   },
   ethiopic: {
     name: "Ethiopic",
-    ranges: [[0x1200, 0x137f]],
+    // Restrict to most common Ethiopic syllables and numerals
+    // Restrict to most common base syllables (U+1200–U+1248) and digits (U+1369–U+1371)
+    ranges: [
+      [0x1200, 0x1248], // base syllables
+      [0x1369, 0x1371], // digits
+    ],
   },
   tamil: {
     name: "Tamil",
-    ranges: [[0x0b80, 0x0bff]],
+    // U+0B85–U+0BB9: Tamil letters, U+0BC6–U+0BCC: vowels, U+0BD0: OM, U+0B95–U+0BB9: consonants, U+0BE6–U+0BEF: digits
+    // Exclude reserved, deprecated, and combining marks
+    ranges: [
+      [0x0b85, 0x0b8a], // vowels
+      [0x0b8e, 0x0b90], // vowels
+      [0x0b92, 0x0b95], // vowels + ka
+      [0x0b95, 0x0b9a], // consonants
+      [0x0b9c, 0x0b9c], // ja
+      [0x0b9e, 0x0b9f], // nya, tta
+      [0x0ba3, 0x0ba4], // nna, ta
+      [0x0ba8, 0x0baa], // na, pa
+      [0x0bae, 0x0bb9], // ma–ha
+      [0x0be6, 0x0bef], // digits
+      [0x0bd0, 0x0bd0], // OM
+    ],
+  },
+  kannada: {
+    name: "Kannada",
+    // U+0C85–U+0C94: vowels, U+0C95–U+0CB9: consonants, U+0CE6–U+0CEF: digits
+    // Restrict to reliably rendering Kannada letters and digits only
+    ranges: [
+      [0x0c85, 0x0c94], // vowels
+      [0x0c95, 0x0ca8], // ka to na (most basic consonants)
+      [0x0ce6, 0x0cef], // digits
+    ],
   },
   bengali: {
     name: "Bengali",
-    ranges: [[0x0980, 0x09ff]],
+    // U+0985–U+0994: vowels, U+0995–U+09B9: consonants, U+09E6–U+09EF: digits
+    ranges: [
+      [0x0985, 0x0994], // vowels
+      [0x0995, 0x09b9], // consonants
+      [0x09e6, 0x09ef], // digits
+    ],
   },
   lao: {
     name: "Lao",
-    ranges: [[0x0e80, 0x0eff]],
+    // U+0E81–U+0E94: consonants, U+0ED0–U+0ED9: digits
+    ranges: [
+      [0x0e81, 0x0e94], // consonants
+      [0x0ed0, 0x0ed9], // digits
+    ],
   },
   myanmar: {
     name: "Myanmar",
-    ranges: [[0x1000, 0x109f]],
+    // U+1000–U+1021: consonants, U+1040–U+1049: digits
+    ranges: [
+      [0x1000, 0x1021], // consonants
+      [0x1040, 0x1049], // digits
+    ],
   },
   khmer: {
     name: "Khmer",
-    ranges: [[0x1780, 0x17ff]],
+    // U+1780–U+17A2: consonants, U+17E0–U+17E9: digits
+    ranges: [
+      [0x1780, 0x17a2], // consonants
+      [0x17e0, 0x17e9], // digits
+    ],
   },
   tibetan: {
     name: "Tibetan",
-    ranges: [[0x0f00, 0x0fff]],
+    // U+0F40–U+0F6C: consonants, U+0F20–U+0F29: digits
+    ranges: [
+      [0x0f40, 0x0f6c], // consonants
+      [0x0f20, 0x0f29], // digits
+    ],
   },
   syriac: {
     name: "Syriac",
@@ -146,10 +233,17 @@ const SCRIPTS = {
   emoji: {
     name: "Emoji",
     ranges: [
-      [0x1f300, 0x1f5ff],
+      //   [0x1f300, 0x1f5ff],
       [0x1f600, 0x1f64f],
-      [0x1f680, 0x1f6ff],
+      //   [0x1f680, 0x1f6ff],
       [0x1f900, 0x1f9ff],
+    ],
+  },
+  binary: {
+    name: "Binary",
+    // Only the characters '0' and '1'
+    ranges: [
+      [0x0030, 0x0031], // '0' and '1'
     ],
   },
 };
@@ -337,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Spoof streaming assistant reply
       chatMessages.push({
         role: "assistant",
-        content: randomString300(),
+        content: stringOfBabel(),
         streaming: true,
       });
       chatDisplay.style.display = "flex";
@@ -358,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Otherwise, allow default (newline on Shift+Enter)
   });
 
-  function randomString300() {
+  function stringOfBabel() {
     // Use SCRIPTS for script ranges
     // Helper: check if a code point is likely to render (skip surrogates, controls, private use, and filter CJK to common subset)
     function isRenderable(cp) {
@@ -389,33 +483,77 @@ document.addEventListener("DOMContentLoaded", function () {
           return false;
         }
       }
+      // Tamil: skip combining marks, reserved, and unassigned (0x0B82, 0x0B83, 0x0B9B, 0x0B9D, 0x0BA0-0x0BA2, 0x0BA5-0x0BA7, 0x0BAB-0x0BAD, 0x0BBA-0x0BBD, 0x0BC0, 0x0BC2-0x0BC5, 0x0BC7-0x0BC8, 0x0BCA-0x0BCC, 0x0BCD, 0x0BD1-0x0BDF, 0x0BEA-0x0BEF, 0x0BF0-0x0BFF)
+      if (cp >= 0x0b80 && cp <= 0x0bff) {
+        // Combining marks and reserved
+        if (
+          cp === 0x0b82 || // Anusvara (combining)
+          cp === 0x0b83 || // Visarga (combining)
+          cp === 0x0b9b || // reserved
+          cp === 0x0b9d || // reserved
+          (cp >= 0x0ba0 && cp <= 0x0ba2) || // reserved
+          (cp >= 0x0ba5 && cp <= 0x0ba7) || // reserved
+          (cp >= 0x0bab && cp <= 0x0bad) || // reserved
+          (cp >= 0x0bba && cp <= 0x0bbd) || // reserved
+          cp === 0x0bc0 || // combining
+          (cp >= 0x0bc2 && cp <= 0x0bc5) || // combining
+          (cp >= 0x0bc7 && cp <= 0x0bc8) || // combining
+          (cp >= 0x0bca && cp <= 0x0bcc) || // combining
+          cp === 0x0bcd || // combining
+          (cp >= 0x0bd1 && cp <= 0x0bdf) || // reserved
+          (cp >= 0x0bea && cp <= 0x0bef) || // reserved
+          (cp >= 0x0bf0 && cp <= 0x0bff) // reserved
+        ) {
+          return false;
+        }
+      }
       return true;
     }
 
     function randomChar() {
-      // Build a list of enabled script ranges from SCRIPTS
-      let enabledRanges = [];
+      // Equal script weighting: pick a script uniformly, then a code point from its ranges
+      let enabledScripts = [];
       for (const script in settings.scripts) {
         if (settings.scripts[script] && SCRIPTS[script]) {
-          enabledRanges = enabledRanges.concat(SCRIPTS[script].ranges);
+          enabledScripts.push(script);
         }
       }
       // Fallback to Latin if none enabled
-      if (enabledRanges.length === 0) {
-        enabledRanges = SCRIPTS.latin.ranges;
+      if (enabledScripts.length === 0) {
+        enabledScripts = ["latin"];
       }
-
-      let cp;
-      let tries = 0;
+      let cp,
+        tries = 0;
       do {
-        const [start, end] =
-          enabledRanges[Math.floor(Math.random() * enabledRanges.length)];
-        cp = start + Math.floor(Math.random() * (end - start + 1));
+        // 1. Pick a script at random
+        const script =
+          enabledScripts[Math.floor(Math.random() * enabledScripts.length)];
+        const ranges = SCRIPTS[script].ranges;
+        // 2. Pick a range at random (weighted by range size)
+        const total = ranges.reduce(
+          (sum, [start, end]) => sum + (end - start + 1),
+          0,
+        );
+        let pick = Math.floor(Math.random() * total);
+        let chosenRange;
+        for (const [start, end] of ranges) {
+          const size = end - start + 1;
+          if (pick < size) {
+            chosenRange = [start, end];
+            break;
+          }
+          pick -= size;
+        }
+        if (chosenRange) {
+          cp = chosenRange[0] + pick;
+        } else {
+          cp = 0x20;
+        }
         tries++;
       } while (!isRenderable(cp) && tries < 10);
       // Fallback to space if not renderable after 10 tries
       if (!isRenderable(cp)) {
-        cp = " ";
+        cp = 0x20;
       }
       return String.fromCodePoint(cp);
     }
