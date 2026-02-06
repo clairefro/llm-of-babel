@@ -14,8 +14,24 @@
 
     <div class="container">
       <aside class="settings-sidebar">
-        <button id="settings-toggle" class="settings-toggle-btn">☰</button>
-        <h3 class="sidebar-title">Script Settings</h3>
+        <h3>Settings</h3>
+        <div class="temperature-setting">
+          <h4 class="temperature-label">Temperature</h4>
+          <div class="temperature-slider-row">
+            <span>-∞</span>
+            <input
+              type="range"
+              id="temperature-slider"
+              min="0"
+              max="1"
+              step="0.01"
+              value="1"
+              disabled
+            />
+            <span>∞</span>
+          </div>
+        </div>
+        <h4 class="sidebar-title">Script Settings</h4>
         <div class="sidebar-btn-row">
           <button type="button" id="select-all-btn" class="sidebar-btn">
             Select All
@@ -28,6 +44,7 @@
           <!-- JS will populate checkboxes here -->
         </form>
       </aside>
+      <button id="settings-toggle" class="settings-toggle-btn">☰</button>
       <main>
         <div class="greeter-banner">
           <div class="greeter-title">?</div>

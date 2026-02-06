@@ -25,8 +25,9 @@
 //   emoji: " ", // space only
 // };
 
-// Global settings for script toggles
+// Global settings for script toggles and temperature
 const settings = {
+  temperature: 1.0,
   scripts: {
     latin: true, // 0041–007A, 00C0–00FF (A-Z, a-z, Latin-1 Supplement)
     binary: false, // 0, 1
@@ -55,6 +56,12 @@ const settings = {
     emoji: false, // 1F300–1FAD6, 1F600–1F64F, etc.
   },
 };
+// Temperature slider logic
+const tempSlider = document.getElementById("temperature-slider");
+if (tempSlider) {
+  tempSlider.value = 1;
+  tempSlider.disabled = true;
+}
 
 const SCRIPTS = {
   latin: {
@@ -329,7 +336,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // Optional: close sidebar when clicking outside
     document.addEventListener("click", (e) => {
-      if (open && !settingsSidebar.contains(e.target)) {
+      if (
+        open &&
+        !settingsSidebar.contains(e.target) &&
+        e.target !== settingsToggle
+      ) {
         open = false;
         settingsSidebar.classList.remove("open");
       }
