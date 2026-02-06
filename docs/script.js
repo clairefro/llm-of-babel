@@ -543,9 +543,9 @@ document.addEventListener("DOMContentLoaded", function () {
           enabledScripts.push(script);
         }
       }
-      // Fallback to Latin if none enabled
+      // Fallback to binary if none enabled
       if (enabledScripts.length === 0) {
-        enabledScripts = ["latin"];
+        enabledScripts = ["binary"];
       }
       let cp,
         tries = 0;
