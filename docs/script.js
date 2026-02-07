@@ -382,6 +382,25 @@ document.addEventListener("DOMContentLoaded", function () {
     if (chatArea) chatArea.insertBefore(chatDisplay, chatArea.firstChild);
   }
 
+  // --- AUTO_SCROLL logic ---
+  let autoScroll = true;
+  let streamingActive = false;
+
+  // Listen for user scroll during streaming
+  chatDisplay.addEventListener("scroll", function () {
+    if (!streamingActive) return;
+    // If user scrolls up (not at bottom), disable autoScroll
+    const threshold = 10; // px
+    if (
+      chatDisplay.scrollHeight -
+        chatDisplay.scrollTop -
+        chatDisplay.clientHeight >
+      threshold
+    ) {
+      autoScroll = false;
+    }
+  });
+
   function renderMessages() {
     chatDisplay.innerHTML = "";
     chatMessages.forEach((msg, idx) => {
@@ -395,6 +414,8 @@ document.addEventListener("DOMContentLoaded", function () {
         msg.streaming
       ) {
         streaming = true;
+        streamingActive = true;
+        autoScroll = true; // Enable by default for new message
         let i = 0;
         msgDiv.textContent = "";
         chatDisplay.appendChild(msgDiv);
@@ -402,10 +423,14 @@ document.addEventListener("DOMContentLoaded", function () {
           if (i < msg.content.length) {
             const chunkSize = Math.floor(Math.random() * 8) + 1;
             msgDiv.textContent += msg.content.slice(i, i + chunkSize);
-            chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            if (autoScroll) {
+              chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            }
             i += chunkSize;
             setTimeout(streamChar, 30);
           } else {
+            streamingActive = false;
+            autoScroll = true; // Re-enable after streaming completes
             if (msg.role === "assistant") {
               addCopyIcon(msgDiv, msg.content);
             }
@@ -419,8 +444,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
-    // Scroll to bottom after rendering
-    chatDisplay.scrollTop = chatDisplay.scrollHeight;
+    // Scroll to bottom after rendering (only if autoScroll)
+    if (autoScroll) {
+      chatDisplay.scrollTop = chatDisplay.scrollHeight;
+    }
 
     // Helper to add copy icon
     function addCopyIcon(parentDiv, text) {
