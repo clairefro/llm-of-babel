@@ -576,4 +576,8 @@ input[type="checkbox"]:checked {
     max-width: 100%;
     box-sizing: border-box;
   }
+
+  .chat-display {
+    padding-top: 6rem;
+  }
 }
