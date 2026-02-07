@@ -63,6 +63,8 @@ if (tempSlider) {
   tempSlider.disabled = true;
   // Fire event on any user attempt to interact with the slider
   const fireSliderAttempt = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     // Always set slider value to 1
     tempSlider.value = 1;
     const quips = [
@@ -74,7 +76,7 @@ if (tempSlider) {
   };
   tempSlider.addEventListener("pointerdown", fireSliderAttempt);
   tempSlider.addEventListener("keydown", fireSliderAttempt);
-  tempSlider.addEventListener("change", fireSliderAttempt);
+  //   tempSlider.addEventListener("change", fireSliderAttempt);
 }
 
 const SCRIPTS = {

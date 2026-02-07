@@ -1,10 +1,3 @@
-/* Utility: force container to grow to dynamic content height */
-.container-stretch {
-  height: auto !important;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
 :root {
   --background-darkest: #181818;
   --background-dark: #232323;
@@ -79,14 +72,26 @@ input[type="checkbox"]:checked {
 .top-nav {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
-  padding: 24px 0 0 32px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
   position: fixed;
   top: 0;
   left: 0;
   background: var(--background-dark);
   z-index: 10;
   height: var(--navbar-height);
+}
+
+.top-nav .attribution {
+  color: var(--text-muted);
+  font-size: 0.8em;
+}
+.top-nav a.attribution {
+  text-decoration: none;
+}
+.top-nav a.attribution:hover {
+  text-decoration: underline;
 }
 
 /*  overlay below navbar */
@@ -185,7 +190,7 @@ input[type="checkbox"]:checked {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 118px;
+  bottom: 94px;
   height: 18px;
   pointer-events: none;
   display: block;
@@ -383,7 +388,7 @@ input[type="checkbox"]:checked {
 .settings-toggle-btn {
   position: fixed;
   font-size: 18px;
-  top: calc(var(--navbar-height) + 1.5em);
+  top: calc(var(--navbar-height) + 0.5em);
   left: 0;
   z-index: 3001;
   background: var(--background-darkest);
@@ -531,23 +536,6 @@ input[type="checkbox"]:checked {
 }
 .pricing-btn:hover:not(:disabled) {
   background: var(--accent-brown-hover);
-}
-
-/* Footer  */
-.footer {
-  width: 100%;
-  text-align: center;
-  margin: 0.5em 0;
-  font-size: 0.8em;
-  opacity: 0.7;
-}
-.footer a {
-  color: inherit;
-  text-decoration: none;
-  transition: text-decoration 0.2s;
-}
-.footer a:hover {
-  text-decoration: underline;
 }
 
 @media (max-width: 600px) {
