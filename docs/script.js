@@ -119,6 +119,10 @@ if (tempSlider) {
       "Order is just chaos that hasn't found the right monkey.",
       "Entropy cannot be reduced.",
       "The Second Law is not a suggestion.",
+      "Predictability is the thief of understanding.",
+      "Want a 'pattern'? Go buy a rug",
+      "The noise is the signal",
+      "Take it up with Tzinacán and the jaguar",
     ];
     showSliderTooltip(quips[Math.floor(Math.random() * quips.length)]);
     // Remove focus to prevent repeated alerts on mobile
