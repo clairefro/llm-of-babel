@@ -567,7 +567,7 @@ input[type="checkbox"]:checked {
     flex-direction: column;
   }
   .pricing-section {
-    margin-top: 600px;
+    margin-top: 550px;
   }
 
   .pricing-card {
