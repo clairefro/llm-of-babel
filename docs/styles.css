@@ -86,6 +86,7 @@ input[type="checkbox"]:checked {
 .top-nav .attribution {
   color: var(--text-muted);
   font-size: 0.8em;
+  padding: 0.5em;
 }
 .top-nav a.attribution {
   text-decoration: none;
@@ -436,7 +437,7 @@ input[type="checkbox"]:checked {
   text-align: center;
   width: 100%;
   max-width: var(--container-width);
-  margin: 2em auto;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   padding-bottom: 4rem;
@@ -565,7 +566,7 @@ input[type="checkbox"]:checked {
     flex-direction: column;
   }
   .pricing-section {
-    margin-top: 400px;
+    margin-top: 600px;
   }
 
   .pricing-card {
