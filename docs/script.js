@@ -61,10 +61,54 @@ const tempSlider = document.getElementById("temperature-slider");
 if (tempSlider) {
   tempSlider.value = 1;
   tempSlider.disabled = true;
-  // Fire event on any user attempt to interact with the slider
-  const fireSliderAttempt = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  // Tooltip element for slider quips
+  let sliderTooltip = null;
+  function showSliderTooltip(message) {
+    if (!sliderTooltip) {
+      sliderTooltip = document.createElement("div");
+      sliderTooltip.className = "slider-tooltip";
+      sliderTooltip.style.position = "absolute";
+      sliderTooltip.style.background = "#232323";
+      sliderTooltip.style.color = "#fff";
+      sliderTooltip.style.padding = "0.5em 1em";
+      sliderTooltip.style.borderRadius = "0.5em";
+      sliderTooltip.style.boxShadow = "0 2px 8px rgba(0,0,0,0.18)";
+      sliderTooltip.style.fontSize = "0.95em";
+      sliderTooltip.style.zIndex = 1000;
+      sliderTooltip.style.transition = "opacity 0.2s";
+      sliderTooltip.style.opacity = "0";
+      sliderTooltip.style.zIndex = "99999";
+      document.body.appendChild(sliderTooltip);
+    }
+    sliderTooltip.textContent = message;
+    // Position below the slider
+    const rect = tempSlider.getBoundingClientRect();
+    sliderTooltip.style.left =
+      rect.left +
+      window.scrollX +
+      rect.width / 2 -
+      sliderTooltip.offsetWidth / 2 +
+      "px";
+    sliderTooltip.style.top = rect.bottom + window.scrollY + 8 + "px";
+    sliderTooltip.style.opacity = "1";
+    // Recenter after content update
+    setTimeout(() => {
+      sliderTooltip.style.left =
+        rect.left +
+        window.scrollX +
+        200 +
+        rect.width / 2 -
+        sliderTooltip.offsetWidth / 2 +
+        "px";
+    }, 10);
+    // Hide after 2 seconds
+    clearTimeout(sliderTooltip._hideTimeout);
+    sliderTooltip._hideTimeout = setTimeout(() => {
+      sliderTooltip.style.opacity = "0";
+    }, 2000);
+  }
+  // Show tooltip only on hover or touch
+  const fireSliderTooltip = (e) => {
     // Always set slider value to 1
     tempSlider.value = 1;
     const quips = [
@@ -72,13 +116,12 @@ if (tempSlider) {
       "Entropy cannot be reduced.",
       "The Second Law is not a suggestion.",
     ];
-    alert(quips[Math.floor(Math.random() * quips.length)]);
+    showSliderTooltip(quips[Math.floor(Math.random() * quips.length)]);
     // Remove focus to prevent repeated alerts on mobile
     tempSlider.blur();
   };
-  tempSlider.addEventListener("pointerdown", fireSliderAttempt);
-  tempSlider.addEventListener("keydown", fireSliderAttempt);
-  //   tempSlider.addEventListener("change", fireSliderAttempt);
+  tempSlider.addEventListener("mouseenter", fireSliderTooltip);
+  tempSlider.addEventListener("touchstart", fireSliderTooltip);
 }
 
 const SCRIPTS = {

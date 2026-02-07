@@ -438,6 +438,10 @@ input[type="checkbox"]:checked {
   accent-color: var(--accent-orange);
 }
 
+#temperature-slider:hover {
+  cursor: not-allowed;
+}
+
 /* Pricing page styles */
 .pricing-section {
   text-align: center;
