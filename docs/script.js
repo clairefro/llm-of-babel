@@ -80,6 +80,11 @@ if (tempSlider) {
       sliderTooltip.style.zIndex = "99999";
       document.body.appendChild(sliderTooltip);
     }
+    // Always hide and clear previous timeout before showing new message
+    sliderTooltip.style.opacity = "0";
+    clearTimeout(sliderTooltip._hideTimeout);
+    // Force reflow to ensure opacity transition
+    void sliderTooltip.offsetWidth;
     sliderTooltip.textContent = message;
     // Position below the slider
     const rect = tempSlider.getBoundingClientRect();
@@ -95,14 +100,13 @@ if (tempSlider) {
     setTimeout(() => {
       sliderTooltip.style.left =
         rect.left +
+        150 +
         window.scrollX +
-        200 +
         rect.width / 2 -
         sliderTooltip.offsetWidth / 2 +
         "px";
     }, 10);
     // Hide after 2 seconds
-    clearTimeout(sliderTooltip._hideTimeout);
     sliderTooltip._hideTimeout = setTimeout(() => {
       sliderTooltip.style.opacity = "0";
     }, 2000);
