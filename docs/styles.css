@@ -86,7 +86,7 @@ input[type="checkbox"]:checked {
   fill: var(--accent-orange);
   height: 16px;
   width: 16px;
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
   max-height: var(--navbar-height);
 }
 .top-nav .attribution {
