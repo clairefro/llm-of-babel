@@ -498,7 +498,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clear textarea and update placeholder
     chatTextarea.value = "";
     chatTextarea.placeholder = "Reply...";
-    chatTextarea.focus();
+    // Only blur on mobile devices to close keyboard
+    if (
+      /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(
+        navigator.userAgent,
+      )
+    ) {
+      chatTextarea.blur();
+    } else {
+      chatTextarea.focus();
+    }
     // Disable submit button after submit
     if (chatSubmit) chatSubmit.disabled = true;
   });
