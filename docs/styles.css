@@ -539,6 +539,13 @@ input[type="checkbox"]:checked {
 }
 
 @media (max-width: 600px) {
+  .top-nav {
+    padding: 0.5rem;
+  }
+  .nav-link {
+    font-size: 0.8em;
+    padding: 0.75em;
+  }
   .chat-area {
     width: 80vw;
   }
