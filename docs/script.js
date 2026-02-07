@@ -73,6 +73,8 @@ if (tempSlider) {
       "The Second Law is not a suggestion.",
     ];
     alert(quips[Math.floor(Math.random() * quips.length)]);
+    // Remove focus to prevent repeated alerts on mobile
+    tempSlider.blur();
   };
   tempSlider.addEventListener("pointerdown", fireSliderAttempt);
   tempSlider.addEventListener("keydown", fireSliderAttempt);
