@@ -82,7 +82,13 @@ input[type="checkbox"]:checked {
   z-index: 10;
   height: var(--navbar-height);
 }
-
+.top-nav svg {
+  fill: var(--accent-orange);
+  height: 16px;
+  width: 16px;
+  margin-right: 0.5rem;
+  max-height: var(--navbar-height);
+}
 .top-nav .attribution {
   color: var(--text-muted);
   font-size: 0.8em;
