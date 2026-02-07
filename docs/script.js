@@ -1,4 +1,4 @@
-// TODO: Punctuation characters for each script
+// TODO: Punctuation characters for each script?
 // const scriptPunctuation = {
 //   latin: " .,;:!?\"'()-[]{}", // space
 //   cyrillic: " .,;:!?\"'()-[]{}", // space
@@ -409,13 +409,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const msgDiv = document.createElement("div");
       msgDiv.className = "chat-msg " + msg.role;
       // Message content
-      let streaming = false;
       if (
         msg.role === "assistant" &&
         idx === chatMessages.length - 1 &&
         msg.streaming
       ) {
-        streaming = true;
         streamingActive = true;
         autoScroll = true; // Enable by default for new message
         let i = 0;
