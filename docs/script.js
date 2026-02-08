@@ -249,7 +249,8 @@ const SCRIPTS = {
     // Restrict to reliably rendering Kannada letters and digits only
     ranges: [
       [0x0c85, 0x0c8c], // vowels up to before U+0C8D
-      [0x0c8e, 0x0c94], // vowels after U+0C8D
+      [0x0c8e, 0x0c90], // vowels up to before U+0C91
+      [0x0c92, 0x0c94], // vowels after U+0C91
       [0x0c95, 0x0ca8], // ka to na (most basic consonants)
       [0x0ce6, 0x0cef], // digits
     ],
