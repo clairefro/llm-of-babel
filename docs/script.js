@@ -31,6 +31,8 @@ const settings = {
   scripts: {
     latin: true, // 0041–007A, 00C0–00FF (A-Z, a-z, Latin-1 Supplement)
     binary: false, // 0, 1
+    cuneiform: false,
+    braille: false,
     cyrillic: false, // 0400–04FF
     greek: false, // 0370–03FF
     arabic: false, // 0600–06FF
@@ -54,6 +56,8 @@ const settings = {
     cjk: false, // 4E00–9FFF (CJK Unified Ideographs)
     hieroglyph: false, // 13000–1342F (Egyptian Hieroglyphs)
     emoji: false, // 1F300–1FAD6, 1F600–1F64F, etc.
+    cuneiform: false, // 12000–123FF (Sumero-Akkadian Cuneiform)
+    braille: false, // 2800–28FF (Braille Patterns)
   },
 };
 // Temperature slider logic
@@ -145,6 +149,16 @@ const SCRIPTS = {
       //   [0x0021, 0x0021], // exclamation mark
       //   [0x003f, 0x003f], // question mark
     ],
+  },
+  cuneiform: {
+    name: "Cuneiform",
+    // Sumero-Akkadian Cuneiform: U+12000–U+123FF
+    ranges: [[0x12000, 0x123ff]],
+  },
+  braille: {
+    name: "Braille",
+    // Braille Patterns: U+2800–U+28FF
+    ranges: [[0x2800, 0x28ff]],
   },
   cyrillic: {
     name: "Cyrillic",
