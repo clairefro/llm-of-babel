@@ -33,6 +33,7 @@ const settings = {
     binary: false, // 0, 1
     cuneiform: false,
     braille: false,
+    runic: false, // 16A0–16FF
     cyrillic: false, // 0400–04FF
     greek: false, // 0370–03FF
     arabic: false, // 0600–06FF
@@ -137,6 +138,11 @@ if (tempSlider) {
 }
 
 const SCRIPTS = {
+  runic: {
+    name: "Runic",
+    // Runic: U+16A0–U+16FF
+    ranges: [[0x16a0, 0x16f8]],
+  },
   latin: {
     name: "Latin",
     // Only A-Z (0x41-0x5A), a-z (0x61-0x7A), space (0x20), period (0x2E), comma (0x2C), exclamation mark (0x21), question mark (0x3F)
